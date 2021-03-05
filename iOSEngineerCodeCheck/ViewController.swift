@@ -37,6 +37,23 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 
+    // MARK: Private Methods
+    private func request(url: URL) {
+        task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+            if let data = data {
+                let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+                if let obj = obj, let items = obj["items"] as? [[String: Any]] {
+                    self.repo = items
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
+        // これ呼ばなきゃリストが更新されません
+        task?.resume()
+    }
+
     // MARK: UISearchBarDelegate
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         // ↓こうすれば初期のテキストを消せる
@@ -51,18 +68,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let word = searchBar.text, word.count != 0 {
             if let url = URL(string: urlStr + word) {
-                task = URLSession.shared.dataTask(with: url) { (data, _, _) in
-                    if let data = data, let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                        if let items = obj["items"] as? [[String: Any]] {
-                            self.repo = items
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                        }
-                    }
-                }
-                // これ呼ばなきゃリストが更新されません
-                task?.resume()
+                request(url: url)
             }
         }
     }

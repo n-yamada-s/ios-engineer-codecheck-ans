@@ -43,18 +43,22 @@ class ViewController2: UIViewController {
         titleLabel.text = repo["full_name"] as? String
 
         if let owner = repo["owner"] as? [String: Any] {
-            if let imgUrlStr = owner["avatar_url"] as? String {
-                if let imgUrl = URL(string: imgUrlStr) {
-                    URLSession.shared.dataTask(with: imgUrl) { (data, _, _) in
-                        if let data = data, let img = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.imageView.image = img
-                            }
-                        }
-                    }.resume()
-                }
+            let imgUrlStr = owner["avatar_url"] as? String ?? ""
+            if let imgUrl = URL(string: imgUrlStr) {
+                requestImage(url: imgUrl)
             }
         }
+    }
+
+    private func requestImage(url: URL) {
+        URLSession.shared.dataTask(with: url) { (data, _, _) in
+            if let data = data {
+                let img = UIImage(data: data)
+                DispatchQueue.main.async {
+                    self.imageView.image = img
+                }
+            }
+        }.resume()
     }
 
 }
