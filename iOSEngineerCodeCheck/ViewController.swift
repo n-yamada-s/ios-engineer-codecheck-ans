@@ -20,7 +20,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     // MARK: Private Properties
     private var task: URLSessionTask?
     private var word: String!
-    private var url: String!
+    private var urlStr: String!
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
@@ -49,22 +49,22 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        word = searchBar.text!
-
-        if word.count != 0 {
-            url = "https://api.github.com/search/repositories?q=\(word!)"
-            task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, _, _) in
-                if let obj = try? JSONSerialization.jsonObject(with: data!) as? [String: Any] {
-                    if let items = obj["items"] as? [[String: Any]] {
-                    self.repo = items
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
+        if let word = searchBar.text, word.count != 0 {
+            urlStr = "https://api.github.com/search/repositories?q=\(word)"
+            if let url = URL(string: urlStr) {
+                task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+                    if let data = data, let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                        if let items = obj["items"] as? [[String: Any]] {
+                        self.repo = items
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                         }
                     }
                 }
+                // これ呼ばなきゃリストが更新されません
+                task?.resume()
             }
-            // これ呼ばなきゃリストが更新されません
-            task?.resume()
         }
     }
 
