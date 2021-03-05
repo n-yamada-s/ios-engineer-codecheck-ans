@@ -10,14 +10,19 @@ import UIKit
 
 class ViewController: UITableViewController, UISearchBarDelegate {
 
+    // MARK: IBOutlets
     @IBOutlet private weak var searchBar: UISearchBar!
 
+    // MARK: Public Properties
     var repo: [[String: Any]] = []
+    var idx: Int!
+
+    // MARK: Private Properties
     private var task: URLSessionTask?
     private var word: String!
     private var url: String!
-    var idx: Int!
 
+    // MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -25,6 +30,14 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         searchBar.delegate = self
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Detail" {
+            let dtl = segue.destination as? ViewController2
+            dtl?.vc1 = self
+        }
+    }
+
+    // MARK: UISearchBarDelegate
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         // ↓こうすれば初期のテキストを消せる
         searchBar.text = ""
@@ -55,13 +68,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail" {
-            let dtl = segue.destination as? ViewController2
-            dtl?.vc1 = self
-        }
-    }
-
+    // MARK: UITableViewDataSource, UITableViewDelegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repo.count
     }

@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController2: UIViewController {
 
+    // MARK: IBOutlets
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
@@ -18,8 +19,10 @@ class ViewController2: UIViewController {
     @IBOutlet private weak var forksLabel: UILabel!
     @IBOutlet private weak var issuesLabel: UILabel!
 
+    // MARK: Public Properties
     var vc1: ViewController!
 
+    // MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,6 +36,7 @@ class ViewController2: UIViewController {
         getImage()
     }
 
+    // MARK: Private Methods
     private func getImage() {
         let repo = vc1.repo[vc1.idx]
 
