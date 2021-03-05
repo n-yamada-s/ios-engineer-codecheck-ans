@@ -10,12 +10,12 @@ import UIKit
 
 class ViewController: UITableViewController, UISearchBarDelegate {
 
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet private weak var searchBar: UISearchBar!
 
     var repo: [[String: Any]] = []
-    var task: URLSessionTask?
-    var word: String!
-    var url: String!
+    private var task: URLSessionTask?
+    private var word: String!
+    private var url: String!
     var idx: Int!
 
     override func viewDidLoad() {
@@ -50,13 +50,13 @@ class ViewController: UITableViewController, UISearchBarDelegate {
                     }
                 }
             }
-        // これ呼ばなきゃリストが更新されません
-        task?.resume()
+            // これ呼ばなきゃリストが更新されません
+            task?.resume()
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail"{
+        if segue.identifier == "Detail" {
             let dtl = segue.destination as? ViewController2
             dtl?.vc1 = self
         }

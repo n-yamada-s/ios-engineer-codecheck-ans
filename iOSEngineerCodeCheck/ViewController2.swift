@@ -10,13 +10,13 @@ import UIKit
 
 class ViewController2: UIViewController {
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var languageLabel: UILabel!
-    @IBOutlet weak var starsLabel: UILabel!
-    @IBOutlet weak var wathcersLabel: UILabel!
-    @IBOutlet weak var forksLabel: UILabel!
-    @IBOutlet weak var issuesLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var languageLabel: UILabel!
+    @IBOutlet private weak var starsLabel: UILabel!
+    @IBOutlet private weak var wathcersLabel: UILabel!
+    @IBOutlet private weak var forksLabel: UILabel!
+    @IBOutlet private weak var issuesLabel: UILabel!
 
     var vc1: ViewController!
 
@@ -33,7 +33,7 @@ class ViewController2: UIViewController {
         getImage()
     }
 
-    func getImage() {
+    private func getImage() {
         let repo = vc1.repo[vc1.idx]
 
         titleLabel.text = repo["full_name"] as? String
