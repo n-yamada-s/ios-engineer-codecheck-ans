@@ -15,12 +15,12 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     // MARK: Public Properties
     var repo: [[String: Any]] = []
-    var idx: Int!
+    var idx: Int = 0
 
     // MARK: Private Properties
     private var task: URLSessionTask?
-    private var word: String!
-    private var urlStr: String!
+    private var word: String?
+    private let urlStr: String = "https://api.github.com/search/repositories?q="
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
@@ -50,12 +50,11 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let word = searchBar.text, word.count != 0 {
-            urlStr = "https://api.github.com/search/repositories?q=\(word)"
-            if let url = URL(string: urlStr) {
+            if let url = URL(string: urlStr + word) {
                 task = URLSession.shared.dataTask(with: url) { (data, _, _) in
                     if let data = data, let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                         if let items = obj["items"] as? [[String: Any]] {
-                        self.repo = items
+                            self.repo = items
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
