@@ -51,11 +51,11 @@ class ViewController2: UIViewController {
     }
 
     private func requestImage(url: URL) {
-        URLSession.shared.dataTask(with: url) { (data, _, _) in
+        URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
             if let data = data {
                 let img = UIImage(data: data)
                 DispatchQueue.main.async {
-                    self.imageView.image = img
+                    self?.imageView.image = img
                 }
             }
         }.resume()

@@ -39,13 +39,13 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     // MARK: Private Methods
     private func request(url: URL) {
-        task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+        task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
             if let data = data {
                 let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
                 if let obj = obj, let items = obj["items"] as? [[String: Any]] {
-                    self.repo = items
+                    self?.repo = items
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self?.tableView.reloadData()
                     }
                 }
             }
