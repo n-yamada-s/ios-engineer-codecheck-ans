@@ -79,7 +79,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Repository", for: indexPath)
         let item = repo[indexPath.row]
         cell.textLabel?.text = item["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = item["language"] as? String ?? ""
