@@ -15,7 +15,7 @@ class ViewController2: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var starsLabel: UILabel!
-    @IBOutlet private weak var wathcersLabel: UILabel!
+    @IBOutlet private weak var watchersLabel: UILabel!
     @IBOutlet private weak var forksLabel: UILabel!
     @IBOutlet private weak var issuesLabel: UILabel!
 
@@ -30,7 +30,7 @@ class ViewController2: UIViewController {
 
         languageLabel.text = "Written in \(repo["language"] as? String ?? "")"
         starsLabel.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
-        wathcersLabel.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
+        watchersLabel.text = "\(repo["watchers_count"] as? Int ?? 0) watchers"
         forksLabel.text = "\(repo["forks_count"] as? Int ?? 0) forks"
         issuesLabel.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
         getImage()
