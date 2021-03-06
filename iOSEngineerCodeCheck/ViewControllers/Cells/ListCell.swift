@@ -10,8 +10,10 @@ import UIKit
 
 class ListCell: UITableViewCell {
 
+    // MARK: IBOutlets
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
+    @IBOutlet weak var languageView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,9 +23,10 @@ class ListCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    // MARK: Public Methods
     func configure(_ item: Item) {
         titleLabel.text = item.fullName
         languageLabel.text = item.language
+        languageView.isHidden = (item.language == "" )
     }
-
 }

@@ -27,9 +27,9 @@ class ListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         repoModel.delegate = self
-
-        searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
+
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -72,8 +72,6 @@ extension ListViewController: RepositoryModelDelegate {
 
 extension ListViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // フォーカスが当たる際に、テキスト削除
-        searchBar.text = ""
         return true
     }
 

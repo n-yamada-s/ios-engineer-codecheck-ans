@@ -12,7 +12,6 @@ class DetailViewController: UIViewController {
 
     // MARK: IBOutlets
     @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var starsLabel: UILabel!
     @IBOutlet private weak var watchersLabel: UILabel!
@@ -35,12 +34,12 @@ class DetailViewController: UIViewController {
             if let imgUrl = URL(string: item.owner.avatarUrl) {
                 self.getImage(url: imgUrl)
             }
-            titleLabel.text = item.fullName
-            languageLabel.text = "Written in \(item.language)"
-            starsLabel.text = "\(item.stargazersCount) stars"
-            watchersLabel.text = "\(item.watchersCount) watchers"
-            forksLabel.text = "\(item.forksCount) forks"
-            issuesLabel.text = "\(item.openIssuesCount) open issues"
+            self.navigationItem.title = item.fullName
+            languageLabel.text = item.language
+            starsLabel.text = "\(item.stargazersCount)"
+            watchersLabel.text = "\(item.watchersCount)"
+            forksLabel.text = "\(item.forksCount)"
+            issuesLabel.text = "\(item.openIssuesCount)"
         }
 
     }
