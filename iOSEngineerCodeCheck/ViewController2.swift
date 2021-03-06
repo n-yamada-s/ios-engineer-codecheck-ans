@@ -26,26 +26,26 @@ class ViewController2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        applyItem()
+    }
+
+    // MARK: Private Methods
+    private func applyItem() {
         if let item = vc1.repo?.items[vc1.idx] {
+            if let imgUrl = URL(string: item.owner.avatarUrl) {
+                self.getImage(url: imgUrl)
+            }
+            titleLabel.text = item.fullName
             languageLabel.text = "Written in \(item.language)"
             starsLabel.text = "\(item.stargazersCount) stars"
             watchersLabel.text = "\(item.watchersCount) watchers"
             forksLabel.text = "\(item.forksCount) forks"
             issuesLabel.text = "\(item.openIssuesCount) open issues"
-            getImage(item)
         }
+
     }
 
-    // MARK: Private Methods
-    private func getImage(_ item: Item) {
-        titleLabel.text = item.fullName
-
-        if let imgUrl = URL(string: item.owner.avatarUrl) {
-            requestImage(url: imgUrl)
-        }
-    }
-
-    private func requestImage(url: URL) {
+    private func getImage(url: URL) {
         URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
             if let data = data {
                 let img = UIImage(data: data)
