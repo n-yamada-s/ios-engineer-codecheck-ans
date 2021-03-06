@@ -1,5 +1,5 @@
 //
-//  RepositoryCell.swift
+//  ListCell.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by 山田奈津代 on 2021/03/06.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RepositoryCell: UITableViewCell {
+class ListCell: UITableViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!

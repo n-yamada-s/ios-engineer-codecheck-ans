@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ListViewController.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by 史 翔新 on 2020/04/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class ListViewController: UITableViewController {
 
     // MARK: IBOutlets
     @IBOutlet private weak var searchBar: UISearchBar!
@@ -34,7 +34,7 @@ class ViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let dtl = segue.destination as? ViewController2
+            let dtl = segue.destination as? DetailViewController
             dtl?.item = self.repo?.items[self.idx]
         }
     }
@@ -45,7 +45,7 @@ class ViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryCell", for: indexPath) as? RepositoryCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListCell {
             if let item = repo?.items[indexPath.row] {
                 cell.configure(item)
             }
@@ -61,7 +61,7 @@ class ViewController: UITableViewController {
     }
 }
 
-extension ViewController: RepositoryModelDelegate {
+extension ListViewController: RepositoryModelDelegate {
     func repositoryDidChange(repo: Repository) {
         self.repo = repo
         DispatchQueue.main.async {
@@ -70,7 +70,7 @@ extension ViewController: RepositoryModelDelegate {
     }
 }
 
-extension ViewController: UISearchBarDelegate {
+extension ListViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         // フォーカスが当たる際に、テキスト削除
         searchBar.text = ""
