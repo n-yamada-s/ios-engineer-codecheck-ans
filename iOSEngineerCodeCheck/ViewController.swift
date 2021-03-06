@@ -8,23 +8,26 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+class ViewController: UITableViewController {
 
     // MARK: IBOutlets
     @IBOutlet private weak var searchBar: UISearchBar!
 
     // MARK: Public Properties
-    var repo: Repositories?
+    let repoModel = RepositoryModel()
+
+    var repo: Repository?
     var idx: Int = 0
 
     // MARK: Private Properties
     private var task: URLSessionTask?
-    private let urlStr: String = "https://api.github.com/search/repositories?q="
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        repoModel.delegate = self
+
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
     }
@@ -33,40 +36,6 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         if segue.identifier == "Detail" {
             let dtl = segue.destination as? ViewController2
             dtl?.item = self.repo?.items[self.idx]
-        }
-    }
-
-    // MARK: Private Methods
-    private func request(url: URL) {
-        task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
-            if let data = data {
-                if let obj = try? JSONDecoder().decode(Repositories.self, from: data) {
-                    self?.repo = obj
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
-                    }
-                }
-            }
-        }
-        task?.resume()
-    }
-
-    // MARK: UISearchBarDelegate
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // フォーカスが当たる際に、テキスト削除
-        searchBar.text = ""
-        return true
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let word = searchBar.text, word.count != 0 {
-            if let url = URL(string: urlStr + word) {
-                request(url: url)
-            }
         }
     }
 
@@ -90,5 +59,31 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         // 画面遷移
         performSegue(withIdentifier: "Detail", sender: self)
     }
+}
 
+extension ViewController: RepositoryModelDelegate {
+    func repositoryDidChange(repo: Repository) {
+        self.repo = repo
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+}
+
+extension ViewController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        // フォーカスが当たる際に、テキスト削除
+        searchBar.text = ""
+        return true
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        task?.cancel()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let word = searchBar.text, word.count != 0 {
+            repoModel.request(word: word)
+        }
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  RepositoriesModel.swift
+//  Repository.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by 山田奈津代 on 2021/03/05.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Repositories: Codable {
+struct Repository: Codable {
     let totalCount: Int
     let items: [Item]
 
