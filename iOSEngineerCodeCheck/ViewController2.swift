@@ -20,7 +20,7 @@ class ViewController2: UIViewController {
     @IBOutlet private weak var issuesLabel: UILabel!
 
     // MARK: Public Properties
-    var vc1: ViewController!
+    var item: Item?
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
@@ -31,7 +31,7 @@ class ViewController2: UIViewController {
 
     // MARK: Private Methods
     private func applyItem() {
-        if let item = vc1.repo?.items[vc1.idx] {
+        if let item = item {
             if let imgUrl = URL(string: item.owner.avatarUrl) {
                 self.getImage(url: imgUrl)
             }
