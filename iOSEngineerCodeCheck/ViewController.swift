@@ -19,7 +19,6 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     // MARK: Private Properties
     private var task: URLSessionTask?
-    private var word: String?
     private let urlStr: String = "https://api.github.com/search/repositories?q="
 
     // MARK: View Lifecycle
@@ -49,13 +48,12 @@ class ViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
-        // これ呼ばなきゃリストが更新されません
         task?.resume()
     }
 
     // MARK: UISearchBarDelegate
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
+        // フォーカスが当たる際に、テキスト削除
         searchBar.text = ""
         return true
     }
@@ -89,8 +87,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 画面遷移時に呼ばれる
         idx = indexPath.row
+        // 画面遷移
         performSegue(withIdentifier: "Detail", sender: self)
     }
 
