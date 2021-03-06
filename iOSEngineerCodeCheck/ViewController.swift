@@ -14,7 +14,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet private weak var searchBar: UISearchBar!
 
     // MARK: Public Properties
-    var repo: [[String: Any]] = []
+    var repo: Repositories?
     var idx: Int = 0
 
     // MARK: Private Properties
@@ -41,9 +41,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     private func request(url: URL) {
         task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
             if let data = data {
-                let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-                if let obj = obj, let items = obj["items"] as? [[String: Any]] {
-                    self?.repo = items
+                if let obj = try? JSONDecoder().decode(Repositories.self, from: data) {
+                    self?.repo = obj
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
                     }
@@ -75,15 +74,16 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     // MARK: UITableViewDataSource, UITableViewDelegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repo.count
+        return repo?.items.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Repository", for: indexPath)
-        let item = repo[indexPath.row]
-        cell.textLabel?.text = item["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = item["language"] as? String ?? ""
-        cell.tag = indexPath.row
+        if let item = repo?.items[indexPath.row] {
+            cell.textLabel?.text = item.fullName
+            cell.detailTextLabel?.text = item.language
+            cell.tag = indexPath.row
+        }
 
         return cell
     }

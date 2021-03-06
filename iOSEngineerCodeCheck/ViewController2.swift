@@ -26,27 +26,22 @@ class ViewController2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let repo = vc1.repo[vc1.idx]
-
-        languageLabel.text = "Written in \(repo["language"] as? String ?? "")"
-        starsLabel.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
-        watchersLabel.text = "\(repo["watchers_count"] as? Int ?? 0) watchers"
-        forksLabel.text = "\(repo["forks_count"] as? Int ?? 0) forks"
-        issuesLabel.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
-        getImage()
+        if let item = vc1.repo?.items[vc1.idx] {
+            languageLabel.text = "Written in \(item.language)"
+            starsLabel.text = "\(item.stargazersCount) stars"
+            watchersLabel.text = "\(item.watchersCount) watchers"
+            forksLabel.text = "\(item.forksCount) forks"
+            issuesLabel.text = "\(item.openIssuesCount) open issues"
+            getImage(item)
+        }
     }
 
     // MARK: Private Methods
-    private func getImage() {
-        let repo = vc1.repo[vc1.idx]
+    private func getImage(_ item: Item) {
+        titleLabel.text = item.fullName
 
-        titleLabel.text = repo["full_name"] as? String
-
-        if let owner = repo["owner"] as? [String: Any] {
-            let imgUrlStr = owner["avatar_url"] as? String ?? ""
-            if let imgUrl = URL(string: imgUrlStr) {
-                requestImage(url: imgUrl)
-            }
+        if let imgUrl = URL(string: item.owner.avatarUrl) {
+            requestImage(url: imgUrl)
         }
     }
 
