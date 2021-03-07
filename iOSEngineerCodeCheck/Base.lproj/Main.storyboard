@@ -20,6 +20,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="7ZZ-AM-ep2">
                                 <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="historySearchbar"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="Vad-H1-wfk" id="40z-sE-m2i"/>
                                 </connections>
@@ -55,6 +58,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="historyTableView"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="Vad-H1-wfk" id="wcu-1y-7TT"/>
                                     <outlet property="delegate" destination="Vad-H1-wfk" id="MtQ-WR-Auu"/>
@@ -85,6 +91,9 @@
                                     <action selector="didTapClearButton:" destination="Vad-H1-wfk" eventType="touchUpInside" id="qIS-xM-0Xl"/>
                                 </connections>
                             </button>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="clearButton"/>
+                            </userDefinedRuntimeAttributes>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
@@ -109,6 +118,9 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="listSearchbar"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="2Eg-Kj-nAT" id="hYc-iY-b3w"/>
                                 </connections>
@@ -166,6 +178,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="listTableView"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="2Eg-Kj-nAT" id="Eec-1a-Q8c"/>
                                     <outlet property="delegate" destination="2Eg-Kj-nAT" id="U1w-Zp-uJA"/>

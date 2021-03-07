@@ -24,13 +24,62 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
     }
 
     func testExample() throws {
-        // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // キーボード入力「Swift」で検索
+        let listSearchbar = app.otherElements["listSearchbar"]
+        listSearchbar.tap()
+        // キーボードが日本語表示だった場合
+//        app.buttons["Next keyboard"].tap()
+        app.keys["S"].tap()
+        app/*@START_MENU_TOKEN@*/.keys["w"]/*[[".keyboards.keys[\"w\"]",".keys[\"w\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app/*@START_MENU_TOKEN@*/.keys["i"]/*[[".keyboards.keys[\"i\"]",".keys[\"i\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app/*@START_MENU_TOKEN@*/.keys["f"]/*[[".keyboards.keys[\"f\"]",".keys[\"f\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app/*@START_MENU_TOKEN@*/.keys["t"]/*[[".keyboards.keys[\"t\"]",".keys[\"t\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app/*@START_MENU_TOKEN@*/.buttons["Search"]/*[[".keyboards",".buttons[\"search\"]",".buttons[\"Search\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        sleep(3)
+
+        // キーボード入力「Test」で検索
+        listSearchbar.buttons["Clear text"].tap()
+        listSearchbar.tap()
+        app.keys["T"].tap()
+        app.keys["e"].tap()
+        app.keys["s"].tap()
+        app.keys["t"].tap()
+        app/*@START_MENU_TOKEN@*/.buttons["Search"]/*[[".keyboards",".buttons[\"search\"]",".buttons[\"Search\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        sleep(3)
+
+        // 詳細画面に遷移1
+        app.tables["listTableView"]/*@START_MENU_TOKEN@*/.staticTexts["pytest-dev/pytest"]/*[[".cells.staticTexts[\"pytest-dev\/pytest\"]",".staticTexts[\"pytest-dev\/pytest\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        sleep(1)
+        app.navigationBars["pytest-dev/pytest"].buttons["GitHubのリポジトリ"].tap()
+        sleep(1)
+
+        // 詳細画面に遷移2
+        app.tables["listTableView"].staticTexts["facebook/jest"].tap()
+        sleep(1)
+        app.navigationBars["facebook/jest"].buttons["GitHubのリポジトリ"].tap()
+        sleep(1)
+
+        // 検索履歴の「Swift」で検索
+        listSearchbar.tap()
+        let historySearchbar = app.otherElements["historySearchbar"]
+        historySearchbar.buttons["Clear text"].tap()
+        app.tables["historyTableView"].children(matching: .cell).element(boundBy: 1).staticTexts["Swift"].tap()
+        sleep(3)
+
+        app.tables["listTableView"]/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"apple/swift").element/*[[".cells.containing(.staticText, identifier:\"C++\").element",".cells.containing(.staticText, identifier:\"apple\/swift\").element"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.navigationBars["apple/swift"].buttons["GitHubのリポジトリ"].tap()
+        sleep(1)
+
+        // 検索履歴のクリア
+        listSearchbar.tap()
+        app.navigationBars["検索履歴"].buttons["clearButton"].tap()
+        sleep(3)
+
     }
+
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
