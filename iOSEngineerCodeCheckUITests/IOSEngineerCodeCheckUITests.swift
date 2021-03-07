@@ -28,8 +28,8 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
         app.launch()
 
         // キーボード入力「Swift」で検索
-        let listSearchbar = app.otherElements["listSearchbar"]
-        listSearchbar.tap()
+        let listSearchbutton = app.buttons["listSearchbutton"]
+        listSearchbutton.tap()
         // キーボードが日本語表示だった場合
 //        app.buttons["Next keyboard"].tap()
         app.keys["S"].tap()
@@ -41,8 +41,8 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
         sleep(3)
 
         // キーボード入力「Test」で検索
-        listSearchbar.buttons["Clear text"].tap()
-        listSearchbar.tap()
+        app.otherElements["listSearchbar"].buttons["Clear text"].tap()
+        listSearchbutton.tap()
         app.keys["T"].tap()
         app.keys["e"].tap()
         app.keys["s"].tap()
@@ -63,9 +63,8 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
         sleep(1)
 
         // 検索履歴の「Swift」で検索
-        listSearchbar.tap()
-        let historySearchbar = app.otherElements["historySearchbar"]
-        historySearchbar.buttons["Clear text"].tap()
+        listSearchbutton.tap()
+        app.otherElements["historySearchbar"].buttons["Clear text"].tap()
         app.tables["historyTableView"].children(matching: .cell).element(boundBy: 1).staticTexts["Swift"].tap()
         sleep(3)
 
@@ -74,10 +73,9 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
         sleep(1)
 
         // 検索履歴のクリア
-        listSearchbar.tap()
+        listSearchbutton.tap()
         app.navigationBars["検索履歴"].buttons["clearButton"].tap()
         sleep(3)
-
     }
 
 

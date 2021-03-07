@@ -15,6 +15,8 @@ class ListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var indicator: UIActivityIndicatorView!
     @IBOutlet private weak var indicatorView: UIView!
+    @IBOutlet weak var searchWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchWidthFullConstraint: NSLayoutConstraint!
 
     // MARK: Public Properties
     var word: String?
@@ -23,7 +25,6 @@ class ListViewController: UIViewController {
     private let repoModel = RepositoryModel()
     private var repo = Repository()
     private var task: URLSessionTask?
-    private var idx: Int = 0
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
@@ -37,7 +38,15 @@ class ListViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         indicatorView.isHidden = true
-        searchBar.text = word
+        if word != searchBar.text {
+            searchBar.text = word
+            updateSearchConstraints()
+            requestRepository()
+        }
+    }
+
+    // MARK: Private Methods
+    private func requestRepository() {
         if let word = word {
             repoModel.request(word: word)
             indicatorView.isHidden = false
@@ -45,14 +54,27 @@ class ListViewController: UIViewController {
         }
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail" {
-            let detail = segue.destination as? DetailViewController
-            detail?.item = repo.items[self.idx]
-        } else if segue.identifier == "History" {
-            let history = segue.destination as? HistoryViewController
-            history?.word = word
+    private func updateSearchConstraints() {
+        searchWidthConstraint.isActive = (word != nil)
+        searchWidthFullConstraint.isActive = (word == nil)
+    }
+
+    private func pushDetailView(item: Item) {
+        if let detail = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+            detail.item = item
+            navigationController?.pushViewController(detail, animated: true)
         }
+    }
+
+    private func pushHistoryView() {
+        if let history = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as? HistoryViewController {
+            history.word = word
+            navigationController?.pushViewController(history, animated: true)
+        }
+    }
+
+    @IBAction func didTapSearchButton(_ sender: UIButton) {
+        pushHistoryView()
     }
 }
 
@@ -84,28 +106,26 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        idx = indexPath.row
+        tableView.deselectRow(at: indexPath, animated: true)
         // 画面遷移
-        performSegue(withIdentifier: "Detail", sender: self)
+        pushDetailView(item: repo.items[indexPath.row])
     }
 }
 
 extension ListViewController: UISearchBarDelegate {
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        if searchBar.text == "" && word != nil {
-            // searchBarの×ボタン押下時
-            word = nil
-            repo = Repository()
-            self.tableView.reloadData()
-        } else {
-            // 画面遷移
-            performSegue(withIdentifier: "History", sender: self)
-        }
         return true
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if searchBar.text == "" && word != nil {
+            // searchBarの×ボタン押下時
+            word = nil
+            updateSearchConstraints()
+            repo = Repository()
+            self.tableView.reloadData()
+        }
         searchBar.resignFirstResponder()
     }
 }

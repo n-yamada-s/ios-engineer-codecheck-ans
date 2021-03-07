@@ -114,19 +114,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="GitHubのリポジトリを検索できるよー" id="X2Z-nh-Fs9">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <searchBar contentMode="redraw" placeholder="GitHubのリポジトリを検索できるよー" translatesAutoresizingMaskIntoConstraints="NO" id="nkx-CE-8cU">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="listSearchbar"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outlet property="delegate" destination="2Eg-Kj-nAT" id="hYc-iY-b3w"/>
+                                    <outlet property="delegate" destination="2Eg-Kj-nAT" id="VQp-xj-ox7"/>
                                 </connections>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mRF-dI-S4m">
+                                <rect key="frame" x="5" y="93" width="369" height="41"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="listSearchbutton"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTapSearchButton:" destination="2Eg-Kj-nAT" eventType="touchUpInside" id="K8o-1H-eNr"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lEx-pJ-mHZ">
-                                <rect key="frame" x="0.0" y="132" width="414" height="764"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="752"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 <prototypes>
@@ -187,13 +195,13 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKD-ma-irA">
-                                <rect key="frame" x="0.0" y="132" width="414" height="764"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="752"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="githubLogo" translatesAutoresizingMaskIntoConstraints="NO" id="vYs-TG-dSn">
-                                        <rect key="frame" x="79" y="154" width="256" height="256"/>
+                                        <rect key="frame" x="79" y="148" width="256" height="256"/>
                                     </imageView>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="7N9-ph-xLF">
-                                        <rect key="frame" x="188.5" y="263.5" width="37" height="37"/>
+                                        <rect key="frame" x="188.5" y="257.5" width="37" height="37"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -208,24 +216,37 @@
                         <viewLayoutGuide key="safeArea" id="szO-S5-Qgm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="mRF-dI-S4m" firstAttribute="trailing" secondItem="nkx-CE-8cU" secondAttribute="trailing" constant="-5" id="1wh-kp-Rn8"/>
                             <constraint firstItem="lEx-pJ-mHZ" firstAttribute="leading" secondItem="szO-S5-Qgm" secondAttribute="leading" id="6Da-n0-S6Q"/>
+                            <constraint firstItem="mRF-dI-S4m" firstAttribute="bottom" secondItem="nkx-CE-8cU" secondAttribute="bottom" constant="-10" id="Bck-h1-m9J"/>
+                            <constraint firstItem="lEx-pJ-mHZ" firstAttribute="top" secondItem="nkx-CE-8cU" secondAttribute="bottom" id="H4q-r0-5R6"/>
                             <constraint firstItem="fKD-ma-irA" firstAttribute="leading" secondItem="lEx-pJ-mHZ" secondAttribute="leading" id="I0r-9H-BR1"/>
                             <constraint firstItem="fKD-ma-irA" firstAttribute="bottom" secondItem="lEx-pJ-mHZ" secondAttribute="bottom" id="I49-RI-jNY"/>
                             <constraint firstAttribute="bottom" secondItem="lEx-pJ-mHZ" secondAttribute="bottom" id="IaY-aL-y7f"/>
+                            <constraint firstItem="nkx-CE-8cU" firstAttribute="trailing" secondItem="szO-S5-Qgm" secondAttribute="trailing" id="JZX-I7-GEg"/>
+                            <constraint firstItem="mRF-dI-S4m" firstAttribute="trailing" secondItem="nkx-CE-8cU" secondAttribute="trailing" constant="-40" id="KHP-II-D7Y"/>
                             <constraint firstItem="fKD-ma-irA" firstAttribute="trailing" secondItem="lEx-pJ-mHZ" secondAttribute="trailing" id="KnP-nm-Gg9"/>
+                            <constraint firstItem="mRF-dI-S4m" firstAttribute="top" secondItem="nkx-CE-8cU" secondAttribute="top" constant="5" id="Oyl-qy-ThE"/>
+                            <constraint firstItem="nkx-CE-8cU" firstAttribute="leading" secondItem="szO-S5-Qgm" secondAttribute="leading" id="Rjm-T5-NnG"/>
                             <constraint firstItem="lEx-pJ-mHZ" firstAttribute="trailing" secondItem="szO-S5-Qgm" secondAttribute="trailing" id="YX9-1f-aVe"/>
+                            <constraint firstItem="mRF-dI-S4m" firstAttribute="leading" secondItem="nkx-CE-8cU" secondAttribute="leading" constant="5" id="e2o-sx-yzJ"/>
                             <constraint firstItem="fKD-ma-irA" firstAttribute="top" secondItem="lEx-pJ-mHZ" secondAttribute="top" id="gLU-f4-OJN"/>
-                            <constraint firstItem="lEx-pJ-mHZ" firstAttribute="top" secondItem="X2Z-nh-Fs9" secondAttribute="bottom" id="mCw-bL-bJW"/>
+                            <constraint firstItem="nkx-CE-8cU" firstAttribute="top" secondItem="szO-S5-Qgm" secondAttribute="top" id="gv4-Gt-DJm"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1wh-kp-Rn8"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="GitHubのリポジトリ" id="udH-tU-qlG"/>
                     <connections>
                         <outlet property="indicator" destination="7N9-ph-xLF" id="14m-wz-JWv"/>
                         <outlet property="indicatorView" destination="fKD-ma-irA" id="OcD-FB-fhu"/>
-                        <outlet property="searchBar" destination="X2Z-nh-Fs9" id="m1t-XF-gDx"/>
+                        <outlet property="searchBar" destination="nkx-CE-8cU" id="zLs-Dx-5vP"/>
+                        <outlet property="searchWidthConstraint" destination="KHP-II-D7Y" id="bb6-4H-uwY"/>
+                        <outlet property="searchWidthFullConstraint" destination="1wh-kp-Rn8" id="ZUg-V7-GYm"/>
                         <outlet property="tableView" destination="lEx-pJ-mHZ" id="cqY-vC-xAC"/>
-                        <segue destination="AHY-RL-7mG" kind="push" identifier="Detail" id="LtZ-gj-3uS"/>
-                        <segue destination="Vad-H1-wfk" kind="show" identifier="History" id="hDR-vF-QID"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hau-P0-vyr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -241,20 +262,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Iim-eb-8Ad">
-                                <rect key="frame" x="20" y="108" width="374" height="374"/>
+                                <rect key="frame" x="20" y="64" width="374" height="374"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Iim-eb-8Ad" secondAttribute="height" multiplier="1:1" id="CoT-OC-9DA"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DIh-LU-il1">
-                                <rect key="frame" x="20" y="502" width="374" height="1"/>
+                                <rect key="frame" x="20" y="458" width="374" height="1"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Swt-QC-Ces"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fmE-Sk-p9g">
-                                <rect key="frame" x="133" y="513" width="148.5" height="20.5"/>
+                                <rect key="frame" x="133" y="469" width="148.5" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Written in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ar-EW-Obj">
                                         <rect key="frame" x="0.0" y="0.0" width="66" height="20.5"/>
@@ -271,14 +292,14 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uuA-tH-lMq">
-                                <rect key="frame" x="20" y="543.5" width="374" height="1"/>
+                                <rect key="frame" x="20" y="499.5" width="374" height="1"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="ogg-j7-20K"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="oOe-O2-3RS">
-                                <rect key="frame" x="232.5" y="559.5" width="161.5" height="112"/>
+                                <rect key="frame" x="232.5" y="515.5" width="161.5" height="112"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0gb-01-GLC">
                                         <rect key="frame" x="0.0" y="0.0" width="76" height="112"/>
