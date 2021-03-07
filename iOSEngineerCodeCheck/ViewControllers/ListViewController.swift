@@ -14,13 +14,13 @@ class ListViewController: UITableViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
 
     // MARK: Public Properties
-    let repoModel = RepositoryModel()
-
-    var repo: Repository?
-    var idx: Int = 0
+    var word: String?
 
     // MARK: Private Properties
+    private let repoModel = RepositoryModel()
+    private var repo = Repository()
     private var task: URLSessionTask?
+    private var idx: Int = 0
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
@@ -32,23 +32,32 @@ class ListViewController: UITableViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        searchBar.text = word
+        if let word = word {
+            repoModel.request(word: word)
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let dtl = segue.destination as? DetailViewController
-            dtl?.item = self.repo?.items[self.idx]
+            let detail = segue.destination as? DetailViewController
+            detail?.item = repo.items[self.idx]
+        } else if segue.identifier == "History" {
+            let history = segue.destination as? HistoryViewController
+            history?.word = word
         }
     }
 
     // MARK: UITableViewDataSource, UITableViewDelegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repo?.items.count ?? 0
+        return repo.items.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListCell {
-            if let item = repo?.items[indexPath.row] {
-                cell.configure(item)
-            }
+            let item = repo.items[indexPath.row]
+            cell.configure(item)
             return cell
         }
         return UITableViewCell()
@@ -62,8 +71,9 @@ class ListViewController: UITableViewController {
 }
 
 extension ListViewController: RepositoryModelDelegate {
-    func repositoryDidChange(repo: Repository) {
-        self.repo = repo
+
+    func repositoryDidChange(result: Repository) {
+        repo = result
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -71,17 +81,21 @@ extension ListViewController: RepositoryModelDelegate {
 }
 
 extension ListViewController: UISearchBarDelegate {
+
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         return true
     }
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let word = searchBar.text, word.count != 0 {
-            repoModel.request(word: word)
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if searchBar.text == "" && word != nil {
+            // searchBarの×ボタン押下時
+            word = nil
+            repo = Repository()
+            self.tableView.reloadData()
+        } else {
+            // 画面遷移
+            performSegue(withIdentifier: "History", sender: self)
         }
+        searchBar.resignFirstResponder()
     }
 }

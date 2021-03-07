@@ -17,6 +17,11 @@ struct Repository: Codable {
         case items
     }
 
+    init() {
+        totalCount = 0
+        items = [Item]()
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         totalCount = try container.decode(Int?.self, forKey: .totalCount) ?? 0
@@ -63,7 +68,7 @@ struct Owner: Codable {
     }
 
     init() {
-      self.avatarUrl = ""
+        avatarUrl = ""
     }
 
     init(from decoder: Decoder) throws {

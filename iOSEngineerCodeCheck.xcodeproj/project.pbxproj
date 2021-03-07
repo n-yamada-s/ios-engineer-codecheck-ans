@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F2D064425F4CB3700283D3E /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2D064325F4CB3700283D3E /* HistoryCell.swift */; };
 		4FB076FC25F38B08004724DB /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB076FA25F38B08004724DB /* Repository.swift */; };
 		4FB076FD25F38B08004724DB /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB076FB25F38B08004724DB /* RepositoryModel.swift */; };
 		4FB0770625F38CDE004724DB /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB0770425F38CDE004724DB /* DetailViewController.swift */; };
 		4FB0770725F38CDE004724DB /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB0770525F38CDE004724DB /* ListViewController.swift */; };
 		4FB0770C25F38CE8004724DB /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB0770B25F38CE8004724DB /* ListCell.swift */; };
+		4FB0773425F3E278004724DB /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB0773325F3E278004724DB /* HistoryViewController.swift */; };
 		61E602B025E04EC4E49A9DC7 /* Pods_iOSEngineerCodeCheck_iOSEngineerCodeCheckUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A878363F0ACC70257CFF63 /* Pods_iOSEngineerCodeCheck_iOSEngineerCodeCheckUITests.framework */; };
 		B4A7F1CFC65B7087122EFDD1 /* Pods_iOSEngineerCodeCheckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D7BE4DB1A2EDE5EA647745 /* Pods_iOSEngineerCodeCheckTests.framework */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
@@ -45,11 +47,13 @@
 		030D9D7CE0F44A13F8AB244A /* Pods-iOSEngineerCodeCheckTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheckTests.release.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheckTests/Pods-iOSEngineerCodeCheckTests.release.xcconfig"; sourceTree = "<group>"; };
 		388556C9509818B9AD6E2219 /* Pods-iOSEngineerCodeCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck.release.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck/Pods-iOSEngineerCodeCheck.release.xcconfig"; sourceTree = "<group>"; };
 		3D9CB5A6B217687C44B758F7 /* Pods-iOSEngineerCodeCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck.debug.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck/Pods-iOSEngineerCodeCheck.debug.xcconfig"; sourceTree = "<group>"; };
+		4F2D064325F4CB3700283D3E /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
 		4FB076FA25F38B08004724DB /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		4FB076FB25F38B08004724DB /* RepositoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
 		4FB0770425F38CDE004724DB /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		4FB0770525F38CDE004724DB /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		4FB0770B25F38CE8004724DB /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		4FB0773325F3E278004724DB /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		99D7BE4DB1A2EDE5EA647745 /* Pods_iOSEngineerCodeCheckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSEngineerCodeCheckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCAD8CA041BB6EA8DB215B57 /* Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests/Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,9 +138,10 @@
 		4FB0770225F38C6C004724DB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				4FB0770325F38C74004724DB /* Cells */,
 				4FB0770525F38CDE004724DB /* ListViewController.swift */,
 				4FB0770425F38CDE004724DB /* DetailViewController.swift */,
-				4FB0770325F38C74004724DB /* Cells */,
+				4FB0773325F3E278004724DB /* HistoryViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -145,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				4FB0770B25F38CE8004724DB /* ListCell.swift */,
+				4F2D064325F4CB3700283D3E /* HistoryCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -428,10 +434,12 @@
 				4FB0770725F38CDE004724DB /* ListViewController.swift in Sources */,
 				4FB0770C25F38CE8004724DB /* ListCell.swift in Sources */,
 				4FB0770625F38CDE004724DB /* DetailViewController.swift in Sources */,
+				4F2D064425F4CB3700283D3E /* HistoryCell.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
 				4FB076FD25F38B08004724DB /* RepositoryModel.swift in Sources */,
 				4FB076FC25F38B08004724DB /* Repository.swift in Sources */,
+				4FB0773425F3E278004724DB /* HistoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

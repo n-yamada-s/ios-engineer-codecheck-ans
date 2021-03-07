@@ -9,7 +9,7 @@
 import Foundation
 
 protocol RepositoryModelDelegate: class {
-    func repositoryDidChange(repo: Repository)
+    func repositoryDidChange(result: Repository)
 }
 
 class RepositoryModel {
@@ -23,7 +23,7 @@ class RepositoryModel {
         let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
             if let data = data {
                 if let obj = try? JSONDecoder().decode(Repository.self, from: data) {
-                    self?.delegate?.repositoryDidChange(repo: obj)
+                    self?.delegate?.repositoryDidChange(result: obj)
                 }
             }
         }

@@ -9,6 +9,93 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--検索履歴-->
+        <scene sceneID="vWm-Zs-Bz1">
+            <objects>
+                <viewController storyboardIdentifier="HistoryViewController" id="Vad-H1-wfk" customClass="HistoryViewController" customModule="iOSEngineerCodeCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Gvh-pf-zOT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="7ZZ-AM-ep2">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Vad-H1-wfk" id="40z-sE-m2i"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y92-l0-xR8">
+                                <rect key="frame" x="0.0" y="144" width="414" height="752"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HistoryCell" id="6kC-RC-DBX" customClass="HistoryCell" customModule="iOSEngineerCodeCheck" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6kC-RC-DBX" id="LuO-1c-unb">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tej-x7-AVd">
+                                                    <rect key="frame" x="20" y="8.5" width="374" height="26.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="tej-x7-AVd" secondAttribute="trailing" constant="20" id="DNO-pi-xDP"/>
+                                                <constraint firstItem="tej-x7-AVd" firstAttribute="centerY" secondItem="LuO-1c-unb" secondAttribute="centerY" id="VYv-Lk-3dx"/>
+                                                <constraint firstItem="tej-x7-AVd" firstAttribute="leading" secondItem="LuO-1c-unb" secondAttribute="leading" constant="20" id="quh-sm-f8d"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="wordLabel" destination="tej-x7-AVd" id="Oth-8k-z9w"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vad-H1-wfk" id="wcu-1y-7TT"/>
+                                    <outlet property="delegate" destination="Vad-H1-wfk" id="MtQ-WR-Auu"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2S1-Kl-JZw"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7ZZ-AM-ep2" firstAttribute="top" secondItem="2S1-Kl-JZw" secondAttribute="top" id="Ty4-ot-Iga"/>
+                            <constraint firstItem="7ZZ-AM-ep2" firstAttribute="leading" secondItem="2S1-Kl-JZw" secondAttribute="leading" id="Yga-yu-1ej"/>
+                            <constraint firstItem="Y92-l0-xR8" firstAttribute="top" secondItem="7ZZ-AM-ep2" secondAttribute="bottom" id="gLH-0v-PkU"/>
+                            <constraint firstItem="Y92-l0-xR8" firstAttribute="trailing" secondItem="2S1-Kl-JZw" secondAttribute="trailing" id="o8b-rZ-G4i"/>
+                            <constraint firstAttribute="bottom" secondItem="Y92-l0-xR8" secondAttribute="bottom" id="s97-8L-vyI"/>
+                            <constraint firstItem="7ZZ-AM-ep2" firstAttribute="trailing" secondItem="2S1-Kl-JZw" secondAttribute="trailing" id="uIp-cD-A5g"/>
+                            <constraint firstItem="Y92-l0-xR8" firstAttribute="leading" secondItem="2S1-Kl-JZw" secondAttribute="leading" id="vlQ-Hn-Tqe"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="検索履歴" id="5u2-UZ-dkO">
+                        <barButtonItem key="rightBarButtonItem" id="LJ2-VX-CRB">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="1yZ-0H-SLL">
+                                <rect key="frame" x="302" y="7" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="履歴をクリア">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapClearButton:" destination="Vad-H1-wfk" eventType="touchUpInside" id="qIS-xM-0Xl"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="searchBar" destination="7ZZ-AM-ep2" id="Mf4-fW-e3i"/>
+                        <outlet property="tableView" destination="Y92-l0-xR8" id="By2-X8-goo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nhQ-us-gtS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-499" y="871"/>
+        </scene>
         <!--GitHubのリポジトリ-->
         <scene sceneID="0Yw-Vc-k2Q">
             <objects>
@@ -40,7 +127,7 @@
                                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="LU5-6w-P0s">
                                             <rect key="frame" x="346.5" y="12" width="47.5" height="20"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTC-3E-Htd" customClass="PaddingLabel" customModule="iOSEngineerCodeCheck" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTC-3E-Htd">
                                                     <rect key="frame" x="5" y="1" width="37.5" height="18"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -49,10 +136,10 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="CTC-3E-Htd" secondAttribute="bottom" constant="1" id="ERe-93-7Sk"/>
                                                 <constraint firstAttribute="trailing" secondItem="CTC-3E-Htd" secondAttribute="trailing" constant="5" id="Kte-ZC-Qyy"/>
                                                 <constraint firstItem="CTC-3E-Htd" firstAttribute="leading" secondItem="LU5-6w-P0s" secondAttribute="leading" constant="5" id="Sv3-Hz-kMy"/>
-                                                <constraint firstItem="CTC-3E-Htd" firstAttribute="top" secondItem="LU5-6w-P0s" secondAttribute="top" constant="1" id="UeS-QA-gel"/>
-                                                <constraint firstAttribute="bottom" secondItem="CTC-3E-Htd" secondAttribute="bottom" constant="1" id="abO-AZ-4hm"/>
+                                                <constraint firstItem="CTC-3E-Htd" firstAttribute="top" secondItem="LU5-6w-P0s" secondAttribute="top" constant="1" id="s6P-qZ-jH2"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -60,7 +147,7 @@
                                         <constraint firstItem="a6y-xo-taa" firstAttribute="centerY" secondItem="98h-XR-Bga" secondAttribute="centerY" id="1Qn-BM-1db"/>
                                         <constraint firstItem="a6y-xo-taa" firstAttribute="leading" secondItem="98h-XR-Bga" secondAttribute="leading" constant="20" id="9PE-53-jtf"/>
                                         <constraint firstItem="LU5-6w-P0s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="a6y-xo-taa" secondAttribute="trailing" constant="5" id="VUH-xz-eQt"/>
-                                        <constraint firstItem="LU5-6w-P0s" firstAttribute="centerY" secondItem="98h-XR-Bga" secondAttribute="centerY" id="faA-Wl-BCp"/>
+                                        <constraint firstItem="LU5-6w-P0s" firstAttribute="centerY" secondItem="98h-XR-Bga" secondAttribute="centerY" id="XtZ-lh-zuf"/>
                                         <constraint firstAttribute="trailing" secondItem="LU5-6w-P0s" secondAttribute="trailing" constant="20" id="p7H-3h-Bot"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -79,7 +166,8 @@
                     <navigationItem key="navigationItem" title="GitHubのリポジトリ" id="ktq-eC-ZBq"/>
                     <connections>
                         <outlet property="searchBar" destination="6rq-CD-Hob" id="3gq-mK-4M3"/>
-                        <segue destination="AHY-RL-7mG" kind="show" identifier="Detail" id="qqd-8W-4W1"/>
+                        <segue destination="Vad-H1-wfk" kind="show" identifier="History" id="waF-YX-BcX"/>
+                        <segue destination="AHY-RL-7mG" kind="show" identifier="Detail" id="JPt-LG-38m"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xer-fe-JeW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
