@@ -8,10 +8,13 @@
 
 import UIKit
 
-class ListViewController: UITableViewController {
+class ListViewController: UIViewController {
 
     // MARK: IBOutlets
     @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var indicator: UIActivityIndicatorView!
+    @IBOutlet private weak var indicatorView: UIView!
 
     // MARK: Public Properties
     var word: String?
@@ -33,9 +36,12 @@ class ListViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        indicatorView.isHidden = true
         searchBar.text = word
         if let word = word {
             repoModel.request(word: word)
+            indicatorView.isHidden = false
+            indicator.startAnimating()
         }
     }
 
@@ -48,26 +54,6 @@ class ListViewController: UITableViewController {
             history?.word = word
         }
     }
-
-    // MARK: UITableViewDataSource, UITableViewDelegate
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repo.items.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListCell {
-            let item = repo.items[indexPath.row]
-            cell.configure(item)
-            return cell
-        }
-        return UITableViewCell()
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        idx = indexPath.row
-        // 画面遷移
-        performSegue(withIdentifier: "Detail", sender: self)
-    }
 }
 
 extension ListViewController: RepositoryModelDelegate {
@@ -76,17 +62,37 @@ extension ListViewController: RepositoryModelDelegate {
         repo = result
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            self.indicatorView.isHidden = true
+            self.indicator.stopAnimating()
         }
+    }
+}
+
+extension ListViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return repo.items.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListCell {
+            let item = repo.items[indexPath.row]
+            cell.configure(item)
+            return cell
+        }
+        return UITableViewCell()
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        idx = indexPath.row
+        // 画面遷移
+        performSegue(withIdentifier: "Detail", sender: self)
     }
 }
 
 extension ListViewController: UISearchBarDelegate {
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        return true
-    }
-
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if searchBar.text == "" && word != nil {
             // searchBarの×ボタン押下時
             word = nil
@@ -96,6 +102,10 @@ extension ListViewController: UISearchBarDelegate {
             // 画面遷移
             performSegue(withIdentifier: "History", sender: self)
         }
+        return true
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
 }

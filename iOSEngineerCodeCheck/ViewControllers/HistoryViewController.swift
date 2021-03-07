@@ -27,8 +27,8 @@ class HistoryViewController: UIViewController {
         super.viewDidLoad()
 
         loadWords()
-        searchBar.text = word
         searchBar.becomeFirstResponder()
+        searchBar.text = word
     }
 
     // MARK: Private Methods
