@@ -20,14 +20,19 @@ class RepositoryModel {
         let urlStr = "https://api.github.com/search/repositories?q=" + word
         guard let url = URL(string: urlStr) else { return }
 
-        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
+        requestRepo(url: url) { [weak self] repo in
+            self?.delegate?.repositoryDidChange(result: repo)
+        }
+    }
+
+    func requestRepo(url: URL, completionHandler: ((Repository) -> Void)?) {
+        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
             if let data = data {
                 if let obj = try? JSONDecoder().decode(Repository.self, from: data) {
-                    self?.delegate?.repositoryDidChange(result: obj)
+                    completionHandler?(obj)
                 }
             }
         }
         task.resume()
     }
-
 }

@@ -68,7 +68,7 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
         app.tables["historyTableView"].children(matching: .cell).element(boundBy: 1).staticTexts["Swift"].tap()
         sleep(3)
 
-        app.tables["listTableView"]/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"apple/swift").element/*[[".cells.containing(.staticText, identifier:\"C++\").element",".cells.containing(.staticText, identifier:\"apple\/swift\").element"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.tables["listTableView"].cells.containing(.staticText, identifier: "apple/swift").element.tap()
         app.navigationBars["apple/swift"].buttons["GitHubのリポジトリ"].tap()
         sleep(1)
 
@@ -77,7 +77,6 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
         app.navigationBars["検索履歴"].buttons["clearButton"].tap()
         sleep(3)
     }
-
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
