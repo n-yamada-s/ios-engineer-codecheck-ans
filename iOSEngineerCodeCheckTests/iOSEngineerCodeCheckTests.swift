@@ -30,10 +30,12 @@ class IOSEngineerCodeCheckTests: XCTestCase {
         let word = "swift"
         let urlStr = "https://api.github.com/search/repositories?q=" + word
         guard let url = URL(string: urlStr) else { return }
-        RepositoryModel().requestRepo(url: url, completionHandler: { _ in
+        RepositoryModel().requestRepo(url: url) { _ in
             exp.fulfill()
             exp.fulfill()
-        })
+        } errorHandler: {
+            print("error")
+        }
         wait(for: [exp], timeout: 3.0)
     }
 
@@ -43,7 +45,7 @@ class IOSEngineerCodeCheckTests: XCTestCase {
             // Put the code you want to measure the time of here.
             let word = "swift"
             for _ in 0..<3 {
-                RepositoryModel().request(word: word)
+                RepositoryModel().request(word: word, parPage: 30)
             }
         }
     }

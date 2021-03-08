@@ -74,7 +74,7 @@ class IOSEngineerCodeCheckUITests: XCTestCase {
 
         // 検索履歴のクリア
         listSearchbutton.tap()
-        app.navigationBars["検索履歴"].buttons["clearButton"].tap()
+        app.navigationBars["GitHubのリポジトリ"]/*@START_MENU_TOKEN@*/.buttons["clearButton"]/*[[".buttons[\"履歴をクリア\"]",".buttons[\"clearButton\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         sleep(3)
     }
 
