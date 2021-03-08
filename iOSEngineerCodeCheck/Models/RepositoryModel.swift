@@ -16,8 +16,8 @@ class RepositoryModel {
 
     weak var delegate: RepositoryModelDelegate?
 
-    func request(word: String) {
-        let urlStr = "https://api.github.com/search/repositories?q=" + word
+    func request(word: String, parPage: Int, page: Int = 1) {
+        let urlStr = "https://api.github.com/search/repositories?q=\(word)&per_page=\(parPage)&page=\(page)"
         guard let url = URL(string: urlStr) else { return }
 
         requestRepo(url: url) { [weak self] repo in

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F2D064425F4CB3700283D3E /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2D064325F4CB3700283D3E /* HistoryCell.swift */; };
+		4F3322E525F60D07008D192A /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3322E425F60D07008D192A /* LoadingCell.swift */; };
 		4FB076FC25F38B08004724DB /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB076FA25F38B08004724DB /* Repository.swift */; };
 		4FB076FD25F38B08004724DB /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB076FB25F38B08004724DB /* RepositoryModel.swift */; };
 		4FB0770625F38CDE004724DB /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB0770425F38CDE004724DB /* DetailViewController.swift */; };
@@ -48,6 +49,7 @@
 		388556C9509818B9AD6E2219 /* Pods-iOSEngineerCodeCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck.release.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck/Pods-iOSEngineerCodeCheck.release.xcconfig"; sourceTree = "<group>"; };
 		3D9CB5A6B217687C44B758F7 /* Pods-iOSEngineerCodeCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck.debug.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck/Pods-iOSEngineerCodeCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		4F2D064325F4CB3700283D3E /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
+		4F3322E425F60D07008D192A /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		4FB076FA25F38B08004724DB /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		4FB076FB25F38B08004724DB /* RepositoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
 		4FB0770425F38CDE004724DB /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				4FB0770B25F38CE8004724DB /* ListCell.swift */,
 				4F2D064325F4CB3700283D3E /* HistoryCell.swift */,
+				4F3322E425F60D07008D192A /* LoadingCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				4FB0770C25F38CE8004724DB /* ListCell.swift in Sources */,
 				4FB0770625F38CDE004724DB /* DetailViewController.swift in Sources */,
 				4F2D064425F4CB3700283D3E /* HistoryCell.swift in Sources */,
+				4F3322E525F60D07008D192A /* LoadingCell.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
 				4FB076FD25F38B08004724DB /* RepositoryModel.swift in Sources */,

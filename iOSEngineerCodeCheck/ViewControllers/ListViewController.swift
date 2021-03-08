@@ -21,7 +21,13 @@ class ListViewController: UIViewController {
 
     // MARK: Private Properties
     private let repoModel = RepositoryModel()
-    private var repo = Repository()
+    private let parPage = 30
+    private var items = [Item]()
+    private var totalCount = 0
+
+    private var qWord = ""
+    private var page = 1
+    private var isLoading = false
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
@@ -36,6 +42,7 @@ class ListViewController: UIViewController {
 
         indicatorView.isHidden = true
         setSearchBar("")
+        totalCountLabel.text = "-"
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
      }
@@ -49,7 +56,18 @@ class ListViewController: UIViewController {
     private func requestRepository(word: String) {
         indicatorView.isHidden = false
         indicator.startAnimating()
-        repoModel.request(word: word)
+        totalCountLabel.text = "-"
+        qWord = word
+        page = 1
+        repoModel.request(word: qWord, parPage: parPage)
+    }
+
+    private func addRepository() {
+        tableView.reloadData()
+        if totalCount > page * parPage {
+            page += 1
+            repoModel.request(word: qWord, parPage: parPage, page: page)
+        }
     }
 
     private func pushDetailView(item: Item) {
@@ -76,14 +94,30 @@ class ListViewController: UIViewController {
 extension ListViewController: RepositoryModelDelegate {
 
     func repositoryDidChange(result: Repository) {
-        repo = result
-        DispatchQueue.main.async {
-            self.totalCountLabel.text = "\(self.repo.totalCount)"
-            self.tableView.reloadData()
-            self.indicator.stopAnimating()
-            self.indicatorView.isHidden = true
+        isLoading = false
+        if page == 1 {
+            totalCount = result.totalCount
+            items = result.items
+
+            DispatchQueue.main.async {
+                self.totalCountLabel.text = "\(self.totalCount)"
+                // スクロール位置を戻す
+                self.tableView.setContentOffset(.zero, animated: false)
+                self.tableView.layoutIfNeeded()
+                self.tableView.reloadData()
+                self.indicator.stopAnimating()
+                self.indicatorView.isHidden = true
+            }
+        } else {
+            items.append(contentsOf: result.items)
+
+            DispatchQueue.main.async {
+                self.totalCountLabel.text = "\(self.totalCount)"
+                self.tableView.reloadData()
+            }
         }
     }
+    // 失敗の時は、フラグ更新、page戻す
 }
 
 extension ListViewController: HistoryViewControllerDelegate {
@@ -99,12 +133,21 @@ extension ListViewController: HistoryViewControllerDelegate {
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repo.items.count
+        if isLoading && totalCount > items.count {
+            return items.count + 1
+        }
+        return items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row > items.count - 1 {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as? LoadingCell {
+                cell.start()
+                return cell
+            }
+        }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListCell {
-            let item = repo.items[indexPath.row]
+            let item = items[indexPath.row]
             cell.configure(item)
             return cell
         }
@@ -114,7 +157,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         // 画面遷移
-        pushDetailView(item: repo.items[indexPath.row])
+        pushDetailView(item: items[indexPath.row])
     }
 }
 
@@ -127,10 +170,25 @@ extension ListViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if searchBar.text == "" {
             setSearchBar("")
-            repo = Repository()
-            totalCountLabel.text = "0"
+            items = [Item]()
+            totalCount = 0
+            totalCountLabel.text = "\(totalCount)"
             tableView.reloadData()
         }
         searchBar.resignFirstResponder()
+    }
+}
+
+extension ListViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = tableView.contentOffset.y
+        let frameH = tableView.frame.size.height
+        let contentH = tableView.contentSize.height
+        // 一番下までスクロール（バッファは要調整）
+        if offset + frameH > contentH - 100.0 && !isLoading {
+            isLoading = true
+            addRepository()
+        }
     }
 }
