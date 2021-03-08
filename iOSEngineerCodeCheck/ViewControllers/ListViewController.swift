@@ -19,45 +19,37 @@ class ListViewController: UIViewController {
     @IBOutlet private weak var searchWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var searchWidthFullConstraint: NSLayoutConstraint!
 
-    // MARK: Public Properties
-    var word: String?
-
     // MARK: Private Properties
     private let repoModel = RepositoryModel()
     private var repo = Repository()
-    private var task: URLSessionTask?
 
     // MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        repoModel.delegate = self
-        searchBar.delegate = self
-
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        indicatorView.isHidden = true
-        if word != searchBar.text {
-            searchBar.text = word
-            updateSearchConstraints()
-            requestRepository()
-        }
-    }
+        initView()
+   }
 
     // MARK: Private Methods
-    private func requestRepository() {
-        if let word = word {
-            repoModel.request(word: word)
-            indicatorView.isHidden = false
-            indicator.startAnimating()
-        }
+    private func initView() {
+        repoModel.delegate = self
+
+        indicatorView.isHidden = true
+        setSearchBar("")
+
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+     }
+
+    private func setSearchBar(_ text: String) {
+        searchBar.text = text
+        searchWidthConstraint.isActive = (searchBar.text != "")
+        searchWidthFullConstraint.isActive = (searchBar.text == "")
     }
 
-    private func updateSearchConstraints() {
-        searchWidthConstraint.isActive = (word != nil)
-        searchWidthFullConstraint.isActive = (word == nil)
+    private func requestRepository(word: String) {
+        indicatorView.isHidden = false
+        indicator.startAnimating()
+        repoModel.request(word: word)
     }
 
     private func pushDetailView(item: Item) {
@@ -69,7 +61,8 @@ class ListViewController: UIViewController {
 
     private func pushHistoryView() {
         if let history = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as? HistoryViewController {
-            history.word = word
+            history.word = searchBar.text
+            history.delegate = self
             navigationController?.pushViewController(history, animated: true)
         }
     }
@@ -85,10 +78,20 @@ extension ListViewController: RepositoryModelDelegate {
     func repositoryDidChange(result: Repository) {
         repo = result
         DispatchQueue.main.async {
-            self.totalCountLabel.text = "\(result.totalCount)"
+            self.totalCountLabel.text = "\(self.repo.totalCount)"
             self.tableView.reloadData()
-            self.indicatorView.isHidden = true
             self.indicator.stopAnimating()
+            self.indicatorView.isHidden = true
+        }
+    }
+}
+
+extension ListViewController: HistoryViewControllerDelegate {
+
+    func didSelected(word: String) {
+        if word != searchBar.text {
+            requestRepository(word: word)
+            setSearchBar(word)
         }
     }
 }
@@ -122,12 +125,11 @@ extension ListViewController: UISearchBarDelegate {
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if searchBar.text == "" && word != nil {
-            // searchBarの×ボタン押下時
-            word = nil
-            updateSearchConstraints()
+        if searchBar.text == "" {
+            setSearchBar("")
             repo = Repository()
-            self.tableView.reloadData()
+            totalCountLabel.text = "0"
+            tableView.reloadData()
         }
         searchBar.resignFirstResponder()
     }

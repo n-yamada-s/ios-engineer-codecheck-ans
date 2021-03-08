@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol HistoryViewControllerDelegate: class {
+    func didSelected(word: String)
+}
+
 class HistoryViewController: UIViewController {
 
     // MARK: IBOutlets
@@ -16,6 +20,7 @@ class HistoryViewController: UIViewController {
 
     // MARK: Public Properties
     var word: String?
+    weak var delegate: HistoryViewControllerDelegate?
 
     // MARK: Private Properties
     private var words = [String]()
@@ -48,11 +53,7 @@ class HistoryViewController: UIViewController {
 
     private func dismiss(word: String?) {
         if let word = word {
-            if let navi = navigationController {
-                let count = navi.viewControllers.count
-                let list = navi.viewControllers[count - 2] as? ListViewController
-                list?.word = word
-            }
+            delegate?.didSelected(word: word)
         }
         navigationController?.popViewController(animated: true)
     }
