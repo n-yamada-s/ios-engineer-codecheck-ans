@@ -13,7 +13,7 @@ class ListCell: UITableViewCell {
     // MARK: IBOutlets
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
-    @IBOutlet weak var languageView: UIView!
+    @IBOutlet private weak var languageView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

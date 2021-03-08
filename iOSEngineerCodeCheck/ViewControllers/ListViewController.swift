@@ -12,11 +12,12 @@ class ListViewController: UIViewController {
 
     // MARK: IBOutlets
     @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var totalCountLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var indicator: UIActivityIndicatorView!
     @IBOutlet private weak var indicatorView: UIView!
-    @IBOutlet weak var searchWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var searchWidthFullConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var searchWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var searchWidthFullConstraint: NSLayoutConstraint!
 
     // MARK: Public Properties
     var word: String?
@@ -73,6 +74,7 @@ class ListViewController: UIViewController {
         }
     }
 
+    // MARK: IBAction
     @IBAction func didTapSearchButton(_ sender: UIButton) {
         pushHistoryView()
     }
@@ -83,6 +85,7 @@ extension ListViewController: RepositoryModelDelegate {
     func repositoryDidChange(result: Repository) {
         repo = result
         DispatchQueue.main.async {
+            self.totalCountLabel.text = "\(result.totalCount)"
             self.tableView.reloadData()
             self.indicatorView.isHidden = true
             self.indicator.stopAnimating()
