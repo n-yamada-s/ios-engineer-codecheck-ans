@@ -93,7 +93,7 @@ class ListViewController: UIViewController {
 
 extension ListViewController: RepositoryModelDelegate {
 
-    func repositoryDidChange(result: Repository) {
+    func repositoryDidSuccess(result: Repository) {
         isLoading = false
         if page == 1 {
             totalCount = result.totalCount
@@ -117,7 +117,16 @@ extension ListViewController: RepositoryModelDelegate {
             }
         }
     }
-    // 失敗の時は、フラグ更新、page戻す
+
+    func repositoryDidError() {
+        isLoading = false
+        page -= 1
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.indicator.stopAnimating()
+            self.indicatorView.isHidden = true
+        }
+    }
 }
 
 extension ListViewController: HistoryViewControllerDelegate {
@@ -188,6 +197,7 @@ extension ListViewController: UIScrollViewDelegate {
         // 一番下までスクロール（バッファは要調整）
         if offset + frameH > contentH - 100.0 && !isLoading {
             isLoading = true
+            print("addRepository")
             addRepository()
         }
     }

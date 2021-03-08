@@ -9,7 +9,8 @@
 import Foundation
 
 protocol RepositoryModelDelegate: class {
-    func repositoryDidChange(result: Repository)
+    func repositoryDidSuccess(result: Repository)
+    func repositoryDidError()
 }
 
 class RepositoryModel {
@@ -21,16 +22,32 @@ class RepositoryModel {
         guard let url = URL(string: urlStr) else { return }
 
         requestRepo(url: url) { [weak self] repo in
-            self?.delegate?.repositoryDidChange(result: repo)
+            self?.delegate?.repositoryDidSuccess(result: repo)
+        } errorHandler: { [weak self] in
+            self?.delegate?.repositoryDidError()
         }
     }
 
-    func requestRepo(url: URL, completionHandler: ((Repository) -> Void)?) {
-        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
-            if let data = data {
+    func requestRepo(url: URL, completion: ((Repository) -> Void)?, errorHandler: (() -> Void)?) {
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("client error: \(error.localizedDescription) \n")
+                errorHandler?()
+            }
+
+            guard let data = data, let response = response as? HTTPURLResponse else {
+                print("no data or no response")
+                errorHandler?()
+                return
+            }
+
+            if response.statusCode == 200 {
                 if let obj = try? JSONDecoder().decode(Repository.self, from: data) {
-                    completionHandler?(obj)
+                    completion?(obj)
                 }
+            } else {
+                print("server error statusCode: \(response.statusCode)\n")
+                errorHandler?()
             }
         }
         task.resume()
