@@ -42,7 +42,9 @@ class RepositoryModel {
             }
 
             if response.statusCode == 200 {
-                if let obj = try? JSONDecoder().decode(Repository.self, from: data) {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let obj = try? decoder.decode(Repository.self, from: data) {
                     completion?(obj)
                 }
             } else {

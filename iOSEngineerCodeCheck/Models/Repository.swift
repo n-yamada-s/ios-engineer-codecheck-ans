@@ -12,11 +12,6 @@ struct Repository: Codable {
     let totalCount: Int
     let items: [Item]
 
-    enum CodingKeys: String, CodingKey {
-        case totalCount = "total_count"
-        case items
-    }
-
     init() {
         totalCount = 0
         items = [Item]()
@@ -38,16 +33,6 @@ struct Item: Codable {
     let forksCount: Int
     let openIssuesCount: Int
 
-    enum CodingKeys: String, CodingKey {
-        case fullName = "full_name"
-        case language
-        case owner
-        case stargazersCount = "stargazers_count"
-        case watchersCount = "watchers_count"
-        case forksCount = "forks_count"
-        case openIssuesCount = "open_issues_count"
-    }
-
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         fullName = try container.decode(String?.self, forKey: .fullName) ?? ""
@@ -62,10 +47,6 @@ struct Item: Codable {
 
 struct Owner: Codable {
     let avatarUrl: String
-
-    enum CodingKeys: String, CodingKey {
-        case avatarUrl = "avatar_url"
-    }
 
     init() {
         avatarUrl = ""
